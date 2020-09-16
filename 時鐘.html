@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Solway&family=Source+Code+Pro:ital,wght@1,600&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        html,body{
+            height: 100%;
+        }
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 0;
+            background: #335c67;
+            font-family: 'Source Code Pro', monospace;
+        }
+        #clock{
+            width: 300px;
+            height: 300px;
+            background: #fefae0;
+            border-radius: 50%;
+            /* border: 2px solid #264653; */
+            margin: 80px 0;
+            position: relative;
+        }
+        #hour{
+            position: absolute;
+            width: 20%;
+            height: 10px;
+            border-radius: 5px;
+            background: #14213d;
+            left:30%;
+            top: calc(50% - 5px);
+            transform-origin: right center;
+            transform: rotate(0deg);
+        }
+        #minute{
+            position: absolute;
+            width: 40%;
+            height: 8px;
+            border-radius: 5px;
+            background: #3d405b;
+            left:10%;
+            top: calc(50% - 5px);
+            transform-origin: right center;
+            transform: rotate(0deg);
+        }
+        #sec{
+            position: absolute;
+            width: 45%;
+            height: 5px;
+            border-radius: 5px;
+            background: #e63946;
+            left:5%;
+            top: calc(50% - 5px);
+            transform-origin: right center;
+            transform: rotate(0deg);
+        }
+        #digital-clock{
+            font-size: 2rem;
+            color: #f1faee;
+            margin: 10px;
+        }
+        
+        #clock::before{
+            content: '6';
+            width: 10px;
+            height: 10px;
+            color: #2ec4b6;
+            position: absolute;
+            left: 50%;
+            bottom: 25px;
+            transform: translateX(-12px);
+            font-size: 1.5rem;
+        }
+        #clock::after{
+            content: '12';
+            width: 10px;
+            height: 10px;
+            color: #2ec4b6;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-12px);
+            font-size: 1.5rem;
+        }
+        #clock1::before{
+            content: '3';
+            width: 10px;
+            height: 10px;
+            color: #2ec4b6;
+            position: absolute;
+            right: 8px;
+            top: 130px;
+            transform: translateX(-10px);
+            font-size: 1.5rem;
+        }
+        #clock1::after{
+            content: '9';
+            width: 10px;
+            height: 10px;
+            color: #2ec4b6;
+            position: absolute;
+            left: 20px;
+            top: 130px;
+            transform: translateX(-10px);
+            font-size: 1.5rem;
+        }
+        #button{
+            margin-top: 50px;
+        }
+        
+        button{
+            margin:10px;
+            background: #ee6c4d;
+            border: 1px solid #028090;
+            border-radius:5px;
+            color: #f1faee;
+            cursor: pointer;
+            width: 100px;
+            height: 40px;
+            font-family: 'Solway', serif;
+            }
+                
+    </style>
+</head>
+<body>
+    <div id="clock">
+        <span id="clock1"></span>
+        <div id="hour"></div>
+        <div id="minute"></div>
+        <div id="sec"></div>
+    </div>
+    <div id="digital-clock"></div>
+    <div id="button">
+        <button type="text" id="change">Change Style</button>
+        <button type="text" id="origin">Origin Style</button>
+    </div>
+    <script>
+        const hour = document.getElementById('hour')
+        const minute = document.getElementById('minute')
+        const sec = document.getElementById('sec')
+        const digital = document.getElementById('digital-clock')
+        const change = document.getElementById('change')
+        const clock = document.getElementById('clock')
+        const origin = document.getElementById('origin')
+        //需先執行一次，因為 setInterval 為一秒後才執行
+        const setClock = () =>{
+            let now = new Date()
+            const h = now.getHours()
+            const m = now.getMinutes()
+            const s = now.getSeconds()
+
+            hour.style.transform = `rotate(${h*30+90}deg)`
+            minute.style.transform = `rotate(${m*6+90}deg)`
+            sec.style.transform = `rotate(${s*6+90}deg)`
+            
+            digital.innerHTML = calc(h) + ":" + calc(m) + ":" + calc(s);
+            
+            function calc(num) {
+                if (num < 10) {
+                num = '0' + num
+                }
+                return num;
+            }
+        }
+        
+        setInterval(setClock,1000)
+        change.addEventListener('click',()=>{
+            document.body.style.background = '#011627';
+            document.body.style.transition = '2s';
+            clock.style.background = '#ffffff';
+            clock.style.transition = '2s';
+            digital.style.color = '#3a86ff'
+            digital.style.transition = '2s'
+        })
+        origin.addEventListener('click',()=>{
+            document.body.style.background = '#335c67';
+            digital.style.color = '#f1faee';
+            clock.style.background = '#fefae0';
+
+        })
+    </script>
+</body>
+</html>
